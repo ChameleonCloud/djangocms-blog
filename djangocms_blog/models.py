@@ -216,6 +216,8 @@ class Post(KnockerModel, BlogMetaMixin, TranslatableModel):
                                         blank=True, null=True)
     enable_comments = models.BooleanField(verbose_name=_('enable comments on post'),
                                           default=get_setting('ENABLE_COMMENTS'))
+    featured_post = models.BooleanField(verbose_name=_('Featured Post'),
+                                          default=False)
     sites = models.ManyToManyField('sites.Site', verbose_name=_('Site(s)'), blank=True,
                                    help_text=_('Select sites in which to show the post. '
                                                'If none is set it will be '

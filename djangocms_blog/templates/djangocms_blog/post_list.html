@@ -4,6 +4,48 @@
 {% block canonical_url %}<link rel="canonical" href="{{ view.get_view_url }}"/>{% endblock canonical_url %}
 
 {% block content_blog %}
+<style>
+    ul.featured-post {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    ul.featured-post li {
+        list-style-type: none;
+        padding: 0 0 .5em 0;
+    }
+
+    section.blog-list article::after {
+        display: none;
+    }
+
+ @media screen and (max-width: 767px) {
+    .featured-posts {
+        display: inline-block;
+        width: 100%;
+    }
+    .blog-list {
+        width: 100%;
+        display: inline-block;
+    }    
+    }
+
+@media screen and (min-width: 768px) {
+    .featured-posts {
+        float: right;
+        width: 30%;
+        padding: 0 0 0 3em;
+    }
+    .blog-list {
+        width: 70%;
+        display: inline-block;
+        float: left;
+    }
+}
+
+}
+
+</style>
 <section class="blog-list">
     {% block blog_title %}
     <header>
@@ -37,5 +79,24 @@
     </nav>
     {% endif %}
 </section>
+
+<div class="featured-posts">
+  <h4>Categories</h4>
+  <ul class="featured-post">
+    {% for category in categories %}
+    <li><a href="{{category.get_absolute_url}}">{{category.name}}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="featured-posts">
+  <h4>Featured Posts</h4>
+  <ul class="featured-post">
+    {% for featured_post in featured_posts %}
+    <li><a href="{{featured_post.get_absolute_url}}">{{featured_post.get_title}}</a></li>
+    {% endfor %}
+  </ul>
+  <hr>
+</div>
 {% endblock %}
 {% endspaceless %}
