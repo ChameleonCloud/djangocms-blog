@@ -200,6 +200,8 @@ class Post(KnockerModel, BlogMetaMixin, TranslatableModel):
         on_delete=models.PROTECT,
     )
 
+
+
     date_created = models.DateTimeField(_("created"), auto_now_add=True)
     date_modified = models.DateTimeField(_("last modified"), auto_now=True)
     date_published = models.DateTimeField(_("published since"), null=True, blank=True)
@@ -236,6 +238,8 @@ class Post(KnockerModel, BlogMetaMixin, TranslatableModel):
     enable_comments = models.BooleanField(
         verbose_name=_("enable comments on post"), default=get_setting("ENABLE_COMMENTS")
     )
+    featured_post = models.BooleanField(verbose_name=_('Featured Post'),
+                                          default=False)
     sites = models.ManyToManyField(
         "sites.Site",
         verbose_name=_("Site(s)"),
