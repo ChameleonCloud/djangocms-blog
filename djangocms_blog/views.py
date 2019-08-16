@@ -14,7 +14,7 @@ from django.utils.timezone import now
 from django.utils.translation import get_language
 from django.views.generic import DetailView, ListView
 from parler.views import TranslatableSlugMixin, ViewUrlMixin
-
+from django.utils.translation import get_language_from_request, ugettext_lazy as _
 from .models import BlogCategory, Post
 from .settings import get_setting
 
@@ -64,6 +64,18 @@ class BaseBlogView(AppConfigMixin, ViewUrlMixin):
         template_path = (self.config and self.config.template_prefix) or 'djangocms_blog'
         return os.path.join(template_path, self.base_template_name)
 
+    def get_featured_posts(self):
+        featured_posts = Post.objects.filter(featured_post=True)
+        return featured_posts
+
+    def get_categories(self):
+        categories = BlogCategory.objects
+        language = get_language_from_request(self.request, check_path=True)
+        categories = categories.active_translations(language)
+        categories = categories.order_by('parent__id', 'translations__name').\
+            select_related('app_config').prefetch_related('translations')
+        return categories
+
 
 class BaseBlogListView(BaseBlogView):
     context_object_name = 'post_list'
@@ -72,6 +84,8 @@ class BaseBlogListView(BaseBlogView):
     def get_context_data(self, **kwargs):
         context = super(BaseBlogListView, self).get_context_data(**kwargs)
         context['TRUNCWORDS_COUNT'] = get_setting('POSTS_LIST_TRUNCWORDS_COUNT')
+        context['categories'] = self.get_categories()
+        context['featured_posts'] = self.get_featured_posts()
         return context
 
     def get_paginate_by(self, queryset):
@@ -112,6 +126,8 @@ class PostDetailView(TranslatableSlugMixin, BaseBlogView, DetailView):
         context['meta'] = self.get_object().as_meta()
         context['instant_article'] = self.instant_article
         context['use_placeholder'] = get_setting('USE_PLACEHOLDER')
+        context['categories'] = self.get_categories()
+        context['featured_posts'] = self.get_featured_posts()
         setattr(self.request, get_setting('CURRENT_POST_IDENTIFIER'), self.get_object())
         return context
 
