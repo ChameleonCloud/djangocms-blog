@@ -14,7 +14,6 @@ from .settings import get_setting
 @apphook_pool.register
 class BlogApp(AutoCMSAppMixin, CMSConfigApp):
     name = _('Blog')
-    urls = ['djangocms_blog.urls']
     app_name = 'djangocms_blog'
     app_config = BlogConfig
     menus = [BlogCategoryMenu]
@@ -29,6 +28,9 @@ class BlogApp(AutoCMSAppMixin, CMSConfigApp):
             'object_name': get_setting('DEFAULT_OBJECT_NAME')
         },
     }
+
+    def get_urls(self, page=None, language=None, **kwargs):
+        return ['djangocms_blog.urls']
 
 
 BlogApp.setup()
