@@ -191,6 +191,7 @@ class Post(KnockerModel, BlogMetaMixin, TranslatableModel):
     Blog post
     """
 
+<<<<<<< HEAD
     author = models.ForeignKey(
         dj_settings.AUTH_USER_MODEL,
         verbose_name=_("author"),
@@ -236,6 +237,8 @@ class Post(KnockerModel, BlogMetaMixin, TranslatableModel):
     enable_comments = models.BooleanField(
         verbose_name=_("enable comments on post"), default=get_setting("ENABLE_COMMENTS")
     )
+    featured_post = models.BooleanField(verbose_name=_('Featured Post'),
+                                          default=False)
     sites = models.ManyToManyField(
         "sites.Site",
         verbose_name=_("Site(s)"),
