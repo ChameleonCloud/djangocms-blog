@@ -124,24 +124,37 @@ class PostAdmin(PlaceholderAdminMixin, FrontendEditableAdminMixin, ModelAppHookC
     if apps.is_installed("djangocms_blog.liveblog"):
         actions += ["enable_liveblog", "disable_liveblog"]
     _fieldsets = [
-        (None, {"fields": ["title", "subtitle", "slug", "publish", "featured_post", "include_in_rss", ["categories", "app_config"]]}),
-        (None, {
-            'fields': [[]]
-        }),
-        (_('Info'), {
-            'fields': [['slug', 'tags'],
-                       ['date_published', 'date_published_end', 'date_featured'],
-                       ['enable_comments']],
-            'classes': ('collapse',)
-        }),
-        (_('Images'), {
-            'fields': [['main_image', 'main_image_thumbnail', 'main_image_full']],
-            'classes': ('collapse',)
-        }),
-        (_('SEO'), {
-            'fields': [['meta_description', 'meta_title', 'meta_keywords']],
-            'classes': ('collapse',)
-        }),
+        (
+            None,
+            {
+                "fields": [
+                    "title",
+                    "subtitle",
+                    "slug",
+                    "publish",
+                    "featured_post",
+                    "include_in_rss",
+                    ["categories", "app_config"],
+                ]
+            },
+        ),
+        (None, {"fields": [[]]}),
+        (
+            _("Info"),
+            {
+                "fields": [
+                    ["slug", "tags"],
+                    ["date_published", "date_published_end", "date_featured"],
+                    ["enable_comments"],
+                ],
+                "classes": ("collapse",),
+            },
+        ),
+        (
+            _("Images"),
+            {"fields": [["main_image", "main_image_thumbnail", "main_image_full"]], "classes": ("collapse",)},
+        ),
+        (_("SEO"), {"fields": [["meta_description", "meta_title", "meta_keywords"]], "classes": ("collapse",)}),
     ]
     """
     Default fieldsets structure.

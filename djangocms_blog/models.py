@@ -191,37 +191,53 @@ class Post(KnockerModel, BlogMetaMixin, TranslatableModel):
     Blog post
     """
 
-    date_created = models.DateTimeField(_('created'), auto_now_add=True)
-    date_modified = models.DateTimeField(_('last modified'), auto_now=True)
-    date_published = models.DateTimeField(_('published since'), null=True, blank=True)
-    date_published_end = models.DateTimeField(_('published until'), null=True, blank=True)
-    date_featured = models.DateTimeField(_('featured date'), null=True, blank=True)
-    publish = models.BooleanField(_('publish'), default=False)
-    categories = models.ManyToManyField('djangocms_blog.BlogCategory', verbose_name=_('category'),
-                                        related_name='blog_posts', blank=True)
-    main_image = FilerImageField(verbose_name=_('main image'), blank=True, null=True,
-                                 on_delete=models.SET_NULL,
-                                 related_name='djangocms_blog_post_image')
-    main_image_thumbnail = models.ForeignKey(thumbnail_model,
-                                             verbose_name=_('main image thumbnail'),
-                                             related_name='djangocms_blog_post_thumbnail',
-                                             on_delete=models.SET_NULL,
-                                             blank=True, null=True)
-    main_image_full = models.ForeignKey(thumbnail_model,
-                                        verbose_name=_('main image full'),
-                                        related_name='djangocms_blog_post_full',
-                                        on_delete=models.SET_NULL,
-                                        blank=True, null=True)
-    enable_comments = models.BooleanField(verbose_name=_('enable comments on post'),
-                                          default=get_setting('ENABLE_COMMENTS'))
-    featured_post = models.BooleanField(verbose_name=_('Featured Post'),
-                                          default=False)
-    sites = models.ManyToManyField('sites.Site', verbose_name=_('Site(s)'), blank=True,
-                                   help_text=_('Select sites in which to show the post. '
-                                               'If none is set it will be '
-                                               'visible in all the configured sites.'))
-    app_config = AppHookConfigField(
-        BlogConfig, null=True, verbose_name=_('app. config')
+    date_created = models.DateTimeField(_("created"), auto_now_add=True)
+    date_modified = models.DateTimeField(_("last modified"), auto_now=True)
+    date_published = models.DateTimeField(_("published since"), null=True, blank=True)
+    date_published_end = models.DateTimeField(_("published until"), null=True, blank=True)
+    date_featured = models.DateTimeField(_("featured date"), null=True, blank=True)
+    publish = models.BooleanField(_("publish"), default=False)
+    categories = models.ManyToManyField(
+        "djangocms_blog.BlogCategory", verbose_name=_("category"), related_name="blog_posts", blank=True
+    )
+    main_image = FilerImageField(
+        verbose_name=_("main image"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="djangocms_blog_post_image",
+    )
+    main_image_thumbnail = models.ForeignKey(
+        thumbnail_model,
+        verbose_name=_("main image thumbnail"),
+        related_name="djangocms_blog_post_thumbnail",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    main_image_full = models.ForeignKey(
+        thumbnail_model,
+        verbose_name=_("main image full"),
+        related_name="djangocms_blog_post_full",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    enable_comments = models.BooleanField(
+        verbose_name=_("enable comments on post"), default=get_setting("ENABLE_COMMENTS")
+    )
+    featured_post = models.BooleanField(verbose_name=_("Featured Post"), default=False)
+    sites = models.ManyToManyField(
+        "sites.Site",
+        verbose_name=_("Site(s)"),
+        blank=True,
+        help_text=_(
+            "Select sites in which to show the post. "
+            "If none is set it will be "
+            "visible in all the configured sites."
+        ),
+    )
+    app_config = AppHookConfigField(BlogConfig, null=True, verbose_name=_("app. config"))
     author = models.ForeignKey(
         dj_settings.AUTH_USER_MODEL,
         verbose_name=_("author"),
@@ -267,8 +283,7 @@ class Post(KnockerModel, BlogMetaMixin, TranslatableModel):
     enable_comments = models.BooleanField(
         verbose_name=_("enable comments on post"), default=get_setting("ENABLE_COMMENTS")
     )
-    featured_post = models.BooleanField(verbose_name=_('Featured Post'),
-                                          default=False)
+    featured_post = models.BooleanField(verbose_name=_("Featured Post"), default=False)
     sites = models.ManyToManyField(
         "sites.Site",
         verbose_name=_("Site(s)"),
