@@ -124,13 +124,29 @@ class PostAdmin(PlaceholderAdminMixin, FrontendEditableAdminMixin, ModelAppHookC
     if apps.is_installed("djangocms_blog.liveblog"):
         actions += ["enable_liveblog", "disable_liveblog"]
     _fieldsets = [
-        (None, {"fields": ["title", "subtitle", "slug", "publish", "featured_post", "include_in_rss", ["categories", "app_config"]]}),
-        # left empty for sites, author and related fields
+        (
+            None,
+            {
+                "fields": [
+                    "title",
+                    "subtitle",
+                    "slug",
+                    "publish",
+                    "featured_post",
+                    "include_in_rss",
+                    ["categories", "app_config"],
+                ]
+            },
+        ),
         (None, {"fields": [[]]}),
         (
             _("Info"),
             {
-                "fields": ["tags", ["date_published", "date_published_end", "date_featured"], ["enable_comments"]],
+                "fields": [
+                    "tags",
+                    ["date_published", "date_published_end", "date_featured"],
+                    ["enable_comments"]
+                ],
                 "classes": ("collapse",),
             },
         ),

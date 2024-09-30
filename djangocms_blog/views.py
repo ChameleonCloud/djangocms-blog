@@ -58,8 +58,11 @@ class BaseBlogView(AppConfigMixin, ViewUrlMixin):
         categories = BlogCategory.objects
         language = get_language_from_request(self.request, check_path=True)
         categories = categories.active_translations(language)
-        categories = categories.order_by('parent__id', 'translations__name').\
-            select_related('app_config').prefetch_related('translations')
+        categories = (
+            categories.order_by("parent__id", "translations__name")
+            .select_related("app_config")
+            .prefetch_related("translations")
+        )
         return categories
 
 
@@ -69,9 +72,9 @@ class BaseBlogListView(BaseBlogView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['TRUNCWORDS_COUNT'] = get_setting('POSTS_LIST_TRUNCWORDS_COUNT')
-        context['categories'] = self.get_categories()
-        context['featured_posts'] = self.get_featured_posts()
+        context["TRUNCWORDS_COUNT"] = get_setting("POSTS_LIST_TRUNCWORDS_COUNT")
+        context["categories"] = self.get_categories()
+        context["featured_posts"] = self.get_featured_posts()
         return context
 
     def get_paginate_by(self, queryset):
@@ -109,12 +112,12 @@ class PostDetailView(TranslatableSlugMixin, BaseBlogView, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['meta'] = self.get_object().as_meta()
-        context['instant_article'] = self.instant_article
-        context['use_placeholder'] = get_setting('USE_PLACEHOLDER')
-        context['categories'] = self.get_categories()
-        context['featured_posts'] = self.get_featured_posts()
-        setattr(self.request, get_setting('CURRENT_POST_IDENTIFIER'), self.get_object())
+        context["meta"] = self.get_object().as_meta()
+        context["instant_article"] = self.instant_article
+        context["use_placeholder"] = get_setting("USE_PLACEHOLDER")
+        context["categories"] = self.get_categories()
+        context["featured_posts"] = self.get_featured_posts()
+        setattr(self.request, get_setting("CURRENT_POST_IDENTIFIER"), self.get_object())
         return context
 
 
