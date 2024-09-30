@@ -191,7 +191,7 @@ class Post(KnockerModel, BlogMetaMixin, TranslatableModel):
     Blog post
     """
 
-<<<<<<< HEAD
+
     author = models.ForeignKey(
         dj_settings.AUTH_USER_MODEL,
         verbose_name=_("author"),
