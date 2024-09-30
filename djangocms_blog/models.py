@@ -191,7 +191,6 @@ class Post(KnockerModel, BlogMetaMixin, TranslatableModel):
     Blog post
     """
 
-<<<<<<< HEAD
     date_created = models.DateTimeField(_('created'), auto_now_add=True)
     date_modified = models.DateTimeField(_('last modified'), auto_now=True)
     date_published = models.DateTimeField(_('published since'), null=True, blank=True)
