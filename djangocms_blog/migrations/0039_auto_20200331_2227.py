@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("djangocms_blog", "0039_01_merge"),
+        ("djangocms_blog", "0038_post_media"),
     ]
 
     operations = [
